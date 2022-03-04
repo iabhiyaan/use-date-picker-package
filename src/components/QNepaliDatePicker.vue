@@ -4,8 +4,16 @@ import { useDate } from 'np-date-picker-vue-3'
 
 export default {
 	props: {
-		format: { type: String, default: "yyyy-mm-dd" },
 		calenderType: { type: String, default: "Nepali" },
+		format: {
+			type: String,
+			default(rawProps) {
+				if (rawProps.calenderType === 'English') {
+					return 'YYYY-MM-DD'
+				}
+				return 'yyyy-mm-dd'
+			},
+		},
 		yearSelect: { type: Boolean, default: true },
 		monthSelect: { type: Boolean, default: true },
 		classValue: { type: String, default: "" },
@@ -13,15 +21,17 @@ export default {
 		modelValue: { type: String, default: "" },
 	},
 	setup(props) {
-		const { days, date, visible, show } = useDate(props)
+		const { days, date, visible, show, formatEnglish, convertToNepali } = useDate(props)
 		const formData = ref('');
 
 		function selectDay(dateData) {
 			date.value = dateData;
 			formData.value = date.value.format(props.format)
 		}
+
 		return {
-			days, date, visible, show,
+			days, date, visible, show, convertToNepali,
+			formatEnglish,
 			formData,
 			selectDay
 		}
@@ -39,7 +49,7 @@ export default {
 					<q-btn
 						v-for="(date, i) in days"
 						:key="i"
-						:label="date.day"
+						:label="formatEnglish ? date.day : convertToNepali(date).substr(8, 10)"
 						@click="selectDay(date)"
 						flat
 						round

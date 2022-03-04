@@ -10,7 +10,7 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "core-js": "^3.6.5",
-    "np-date-picker-vue-3": "0.0.8",
+    "np-date-picker-vue-3": "0.10.1",
     "quasar": "^2.0.0",
     "vue": "^3.0.0"
   },
@@ -37,7 +37,7 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "no-mixed-spaces-and-tabs": "0"
+      "no-mixed-spaces-and-tabs": 0
     }
   },
   "browserslist": [
