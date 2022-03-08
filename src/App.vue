@@ -17,11 +17,13 @@ export default {
     const nepaliDate = ref('')
     const englishDate1 = ref('')
     const nepaliDate1 = ref('')
+    const qNepaliDate = ref('')
     return {
       englishDate,
       nepaliDate,
       englishDate1,
       nepaliDate1,
+      qNepaliDate
     }
   }
 
@@ -31,7 +33,7 @@ export default {
 
 <template>
   <div id="app">
-    <QNepaliDatePicker />
+    <QNepaliDatePicker v-model="qNepaliDate" /> {{ qNepaliDate }}
     <div style="display: flex">
       <div id="english-date">
         <label>English DatePicker :</label>

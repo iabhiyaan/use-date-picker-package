@@ -1,5 +1,5 @@
 <script>
-import {ref, computed} from 'vue'
+import {computed} from 'vue'
 import {useDate} from 'np-date-picker-vue-3'
 
 // const { ENGLISH_WEEK } = CONSTANT
@@ -21,9 +21,12 @@ export default {
     placeholder: {type: String, default: ""},
     modelValue: {type: String, default: ""},
   },
-  setup(props) {
+  setup(props, {emit}) {
 
-    const formData = ref('')
+    const formData = computed({
+      get: () => props.modelValue,
+      set: (val) => emit('update:modelValue', val)
+    })
 
     const {
       getToday,
@@ -40,7 +43,6 @@ export default {
         month
       }
     }))
-
     const filledYears = Array.from({length: numberOfYears.value}, (x, i) => ++i)
 
     const yearOpts = computed(() => {
@@ -59,7 +61,6 @@ export default {
     function selectDay(dayDate) {
       formData.value = selectDate(dayDate)
     }
-
 
     return {
       formData,
@@ -113,8 +114,8 @@ export default {
                   <q-select
                       v-if="monthSelect"
                       :options="monthsOpts"
-                      @change="monthSelectChange"
                       v-model="monthValue"
+                      @update:model-value="monthSelectChange"
                       emit-value
                       map-options
                       option-label="month"
@@ -124,8 +125,8 @@ export default {
                   <q-select
                       v-if="yearSelect"
                       :options="yearOpts"
-                      @change="yearSelectChange"
                       v-model="yearValue"
+                      @update:model-value="yearSelectChange"
                       emit-value
                       map-options
                       option-label="year"
